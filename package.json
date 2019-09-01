@@ -1,0 +1,23 @@
+{
+  "name": "social-network-api",
+  "version": "1.0.0",
+  "description": "a social network platform backend using Node.js, Express and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tayfurunal/social-network-api.git"
+  },
+  "keywords": [
+    "node",
+    "api"
+  ],
+  "author": "Tayfur Unal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tayfurunal/social-network-api/issues"
+  },
+  "homepage": "https://github.com/tayfurunal/social-network-api#readme"
+}
