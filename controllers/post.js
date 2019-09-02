@@ -1,8 +1,14 @@
 const Post = require('../models/Post');
 const { validationResult } = require('express-validator');
 
-exports.getPosts = (req, res) => {
-  res.send('ad');
+exports.getPosts = async (req, res) => {
+  try {
+    const posts = await Post.find().select('_id title body');
+    res.json({ posts });
+  } catch (error) {
+    console.log(err);
+    res.status(400).json({ error });
+  }
 };
 
 exports.createPost = async (req, res) => {
@@ -15,6 +21,7 @@ exports.createPost = async (req, res) => {
     await post.save();
     res.json(post);
   } catch (error) {
+    console.log(err);
     res.status(400).json({ error });
   }
 };

@@ -16,3 +16,25 @@ exports.createPostValidator = [
     max: 2000
   })
 ];
+
+exports.signUpValidator = [
+  check('name', 'Name is required')
+    .not()
+    .isEmpty(),
+  check('email', 'Email is not valid')
+    .matches(
+      /[a-z0-9\._%+!$&*=^|~#%'`?{}/\-]+@([a-z0-9\-]+\.){1,}([a-z]{2,16})/
+    )
+    .isLength({
+      min: 4,
+      max: 320
+    }),
+  check('password', 'Password is required')
+    .not()
+    .isEmpty(),
+  check('password')
+    .isLength({
+      min: 6
+    })
+    .withMessage('Password must contain at least 6 characters')
+];
