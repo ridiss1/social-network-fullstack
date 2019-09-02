@@ -12,7 +12,7 @@ module.exports = middleware = (req, res, next) => {
 
   //Verify Token
   try {
-    const decoded = jwt.verify(token, process.env.JWt_SECRET); //Decoding the token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); //Decoding the token
 
     req.user = decoded.user; //req.user will now have all the info. of the user
     next();
