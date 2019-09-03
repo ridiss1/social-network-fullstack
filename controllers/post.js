@@ -6,7 +6,7 @@ exports.getPosts = async (req, res) => {
     const posts = await Post.find().select('_id title body');
     res.json({ posts });
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(400).json({ error });
   }
 };
@@ -21,7 +21,7 @@ exports.createPost = async (req, res) => {
     await post.save();
     res.json(post);
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(400).json({ error });
   }
 };

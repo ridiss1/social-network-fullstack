@@ -19,6 +19,7 @@ mongoose.connection.on('error', err =>
 //Bring in routes
 const postRoutes = require('./routes/post');
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user');
 
 //Init Middleware
 app.use(express.json({ extended: false })); //Instead of doing bodyParser.json
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 
 app.use('/', postRoutes);
 app.use('/', authRoutes);
+app.use('/', userRoutes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
