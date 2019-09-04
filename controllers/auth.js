@@ -4,9 +4,9 @@ const { validationResult } = require('express-validator');
 require('dotenv').config();
 
 exports.signUp = async (req, res) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array()[0].msg });
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array()[0].msg });
   }
   try {
     let user = await User.findOne({ email: req.body.email });
@@ -22,6 +22,10 @@ exports.signUp = async (req, res) => {
 };
 
 exports.signIn = async (req, res) => {
+  const error = validationResult(req);
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array()[0].msg });
+  }
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
@@ -43,7 +47,7 @@ exports.signIn = async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token, _id, name, email }); //Sending the token back to the client
+        res.json({ token, user }); //Sending the token back to the client
       }
     );
   } catch (error) {
