@@ -19,7 +19,7 @@ exports.userByID = async (req, res, next) => {
 exports.allUsers = async (req, res) => {
   try {
     const users = await User.find().select('name email _id created updated');
-    res.json({ users });
+    res.json(users);
   } catch (error) {
     console.error(error.message);
     res.status(500).send(`Server Error...`);
