@@ -1,6 +1,8 @@
 # MERN Stack Social Network
 
-* Authentication and Authorization with JsonWebToken
+* Authentication and Authorization with JSON Web Token.
+* Create Post and Comments for authenticated user.
+* Likes and Following features.
 
 ### Technologies
 
@@ -13,7 +15,7 @@ The technologies used to develop this web app were diverse, the main ones being:
 
 ### Instalation
 
-Clone this repo and install devDependencies
+Clone and install server
 
 ```sh
 $ git clone https://github.com/tayfurunal/social-network-fullstack.git social-network
@@ -27,10 +29,18 @@ $ npm install
 $ npm start
 ```
 
+install client
+
+```sh
+$ cd client
+$ npm install
+$ npm start
+```
+
 ### Screenshots
 
-![image](https://https://s3.gifyu.com/images/loginf4c10e93d77f6b52.gif "Login Page")
+![image](https://media.giphy.com/media/M90wOhIWlEepvgFSWo/giphy.gif)
 
-![image](https://s3.gifyu.com/images/commente859c1f344f8e4bf.md.gif "Profiles")
+![image](https://media.giphy.com/media/TEzUaNF6aZPHaKrVr2/giphy.gif)
 
 ---
