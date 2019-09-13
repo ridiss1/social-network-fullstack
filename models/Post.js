@@ -3,15 +3,13 @@ const { ObjectId } = mongoose.Schema;
 
 const postSchema = new mongoose.Schema({
   title: {
-    type: String,
-    required: true
+    type: String
   },
-  body: {
-    type: String,
-    required: true
+  content: {
+    type: String
   },
   photo: {
-    type: Buffer,
+    data: Buffer,
     contentType: String
   },
   postedBy: {
@@ -20,8 +18,16 @@ const postSchema = new mongoose.Schema({
   },
   created: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now
+  },
+  likes: [{ type: ObjectId, ref: 'User' }],
+  comments: [
+    {
+      text: String,
+      created: { type: Date, default: Date.now() },
+      postedBy: { type: ObjectId, ref: 'User' }
+    }
+  ]
 });
 
 module.exports = mongoose.model('Post', postSchema);

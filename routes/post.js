@@ -3,30 +3,36 @@ const {
   getPosts,
   createPost,
   postsByUser,
-  postByID,
+  postById,
+  isPoster,
   deletePost,
-  updatePost
+  updatePost,
+  getPhotoPost,
+  getPost,
+  likePost,
+  unlikePost,
+  comment,
+  deleteComment
 } = require('../controllers/post');
-const { userByID } = require('../controllers/user');
-const { createPostValidator } = require('../validator/index');
-const requireSignin = require('../middleware/requireSignin');
+const { createPostValidator } = require('../helpers');
+const { requireSignin } = require('../controllers/auth');
+const { userById } = require('../controllers/user');
 
 const router = express.Router();
+router.put('/like', requireSignin, likePost);
+router.put('/unlike', requireSignin, unlikePost);
+router.put('/comment', requireSignin, comment);
+router.put('/deletecomment', requireSignin, deleteComment);
+router.get('/', getPosts);
 
-router.get('/posts', getPosts);
-router.post(
-  '/post/new/:userID',
-  requireSignin,
-  createPost,
-  createPostValidator
-);
-router.get('/posts/by/:userID', requireSignin, postsByUser);
-router.put('/post/:postID', requireSignin, updatePost);
-router.delete('/post/:postID', requireSignin, deletePost);
-//any route containing :userID, our app will first execute userByID()
-router.param('userID', userByID);
+router.post('/new/:userId', requireSignin, createPost, createPostValidator);
+router.get('/by/:userId', requireSignin, postsByUser);
+router.get('/photo/:postId', getPhotoPost);
+router.get('/:postId', requireSignin, getPost);
+router.delete('/:postId', requireSignin, isPoster, deletePost);
+router.put('/:postId', requireSignin, isPoster, updatePost);
 
-//any route containing :postID, our app will first execute postByID()
-router.param('postID', postByID);
+router.param('userId', userById);
+router.param('postId', postById);
 
 module.exports = router;

@@ -1,21 +1,34 @@
 const express = require('express');
 const {
-  userByID,
+  userById,
   allUsers,
   getUser,
+  hasAuthorization,
   updateUser,
-  deleteUser
+  removeUser,
+  getPhotoUser,
+  addFollowing,
+  addFollower,
+  removeFollowing,
+  removeFollower,
+  findPeople
 } = require('../controllers/user');
-const requireSignin = require('../middleware/requireSignin');
+const { requireSignin } = require('../controllers/auth');
 
 const router = express.Router();
+router.put('/follow', requireSignin, addFollowing, addFollower);
+router.put('/unfollow', requireSignin, removeFollowing, removeFollower);
 
-router.get('/users', allUsers);
-router.get('/user/:userID', getUser);
-router.put('/user/:userID', updateUser);
-router.delete('/user/:userID', deleteUser);
+router.get('/', allUsers);
+router.get('/:userId', requireSignin, getUser);
+router.get('/photo/:userId', getPhotoUser);
+router.get('/findpeople/:userId', findPeople);
 
-//any route containing :userID, our app will first execute userByID()
-router.param('userID', userByID);
+router.put('/:userId', requireSignin, hasAuthorization, updateUser);
+
+router.delete('/:userId', requireSignin, hasAuthorization, removeUser);
+
+//any route containing :userId, out app will first execute userById()
+router.param('userId', userById);
 
 module.exports = router;

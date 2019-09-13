@@ -1,57 +1,76 @@
+const User = require('../models/user');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const { validationResult } = require('express-validator');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const expressJwt = require('express-jwt');
+dotenv.config();
 
-exports.signUp = async (req, res) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res.status(400).json({ error: error.array()[0].msg });
-  }
-  try {
-    let user = await User.findOne({ email: req.body.email });
-    if (user) return res.status(403).json({ error: 'Email is taken!' });
-
-    user = new User(req.body);
-    await user.save();
-    res.json({ message: 'SignUp success! Please LogIn.' });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send(`Server Error...`);
-  }
+exports.signup = async (req, res) => {
+  const userExist = await User.findOne({
+    email: req.body.email
+  });
+  if (userExist)
+    return res.status(403).json({
+      err: 'Email is taken!'
+    });
+  const user = await new User(req.body);
+  await user.save();
+  res.json({
+    message: 'Sign up success!!'
+  });
 };
 
-exports.signIn = async (req, res) => {
-  const error = validationResult(req);
-  if (!error.isEmpty()) {
-    return res.status(400).json({ error: error.array()[0].msg });
-  }
+exports.signin = (req, res) => {
   const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ error: 'User not found.' });
-    }
-
-    //if user is found make sure the email and password match
-    //create authenticate method in model and use here
-    if (!user.authenticate(password)) {
-      return res
-        .status(400)
-        .json({ error: 'Email and password do not match.' });
-    }
-    const { _id, name } = user;
-    jwt.sign(
-      { _id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: 360000 },
-      (err, token) => {
-        if (err) throw err;
-        res.json({ token, user }); //Sending the token back to the client
+  User.findOne(
+    {
+      email
+    },
+    (err, user) => {
+      if (err || !user) {
+        return res.status(401).json({
+          err: "Email doesn't exist. Please sign up"
+        });
       }
-    );
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send(`Server Error...`);
-  }
+      //if user is found make sure the email and password match
+      //create authenticate method in model and use here
+      if (!user.authenticate(password)) {
+        return res.status(401).json({
+          err: 'Email and password do not match'
+        });
+      }
+
+      const token = jwt.sign(
+        {
+          _id: user._id
+        },
+        process.env.JWT_SECRET
+      );
+      res.cookie('t', token, {
+        expire: new Date() + 9999
+      });
+      const { _id, name, email } = user;
+      return res.json({
+        token,
+        user: {
+          _id,
+          name,
+          email
+        }
+      });
+    }
+  );
 };
+
+exports.signout = (req, res) => {
+  res.clearCookie('t');
+  return res.json({
+    message: 'Signout success!'
+  });
+};
+
+exports.requireSignin = expressJwt({
+  //if the token is valid, express  jwt appends the verified  users id
+  // in an auth key to the req obj
+  secret: process.env.JWT_SECRET,
+  userProperty: 'auth'
+});
