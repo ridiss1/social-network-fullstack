@@ -29,7 +29,7 @@ $ npm start
 
 ### Screenshots
 
-![image](https://media.giphy.com/media/JTPiRGZwFHP1f014sB/giphy.gif "Login Page")
+![image](https://https://gfycat.com/fainteachfallowdeer "Login Page")
 
 ![image](https://user-images.githubusercontent.com/31391753/46909365-6fab0600-cf07-11e8-985f-a9eb1be66b8b.png "Profiles")
 
