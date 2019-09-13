@@ -1,6 +1,6 @@
 # MERN Stack Social Network
 
-MERN-DevConnector is a project of a social network aimed at developers, with their profiles, skills, experiences, also allows users to write posts, comments and more.
+* Authentication and Authorization with JsonWebToken
 
 ### Technologies
 
@@ -29,15 +29,8 @@ $ npm start
 
 ### Screenshots
 
-![image](https://https://gfycat.com/fainteachfallowdeer "Login Page")
+![image](https://https://s3.gifyu.com/images/loginf4c10e93d77f6b52.gif "Login Page")
 
-![image](https://user-images.githubusercontent.com/31391753/46909365-6fab0600-cf07-11e8-985f-a9eb1be66b8b.png "Profiles")
-
-![image](https://user-images.githubusercontent.com/31391753/46909372-8c473e00-cf07-11e8-9bd1-22b973124e05.png "Post Feed")
+![image](https://s3.gifyu.com/images/commente859c1f344f8e4bf.md.gif "Profiles")
 
 ---
-
-**OBS: This social network was created only for development studies, we do not have any legal patent or dominion over the name of the project.
-If you have a problem with the name or something, contact me to resolve it.**
-
-[here]: https://lameck-devconnector.herokuapp.com
